@@ -1,4 +1,4 @@
-### NanoRes resource processor ###
+### NanoRes resource processor - Version 1.0 ###
 ## Adapted from: https://gist.github.com/rakete/c6f7795e30d5daf43bb600abc06a9ef4
 ## Call via: nr_gen.py
 ## Example (one resource): `python .mesondep/nr_gen.py "resources/my-resource.txt"``
