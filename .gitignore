@@ -186,3 +186,4 @@ cython_debug/
 *.nres
 nres_manifest.txt
 *.out
+*TODO.txt
