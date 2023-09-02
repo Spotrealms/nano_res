@@ -185,3 +185,4 @@ cython_debug/
 !.gitsubmodules
 *.nres
 nres_manifest.txt
+*.out

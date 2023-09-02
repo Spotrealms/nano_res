@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 """
 NanoRes resource processor: dist script.
 Copyright (C) 2023 Spotrealms Network
