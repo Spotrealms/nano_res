@@ -287,4 +287,4 @@ it as '{outPath.name}' with struct variable name '{filenameUscore}_{fshortID}'\n
 
 	#Print stats
 	print(f"Finished processing the {'file' if not isDir else 'directory'} pointed to by '{filePath}'. Run statistics \
-	are as follows:\n\tSuccessful: {success}\n\tFailed: {error}\n\tTotal: {idx}")
+are as follows:\n\tSuccessful: {success}\n\tFailed: {error}\n\tTotal: {idx}")

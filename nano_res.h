@@ -11,6 +11,31 @@
 extern "C" {
 #endif
 
+//Stuff for getcwd()
+#ifdef NRES_NEED_GETCWD
+
+//FS stuff for getcwd
+#ifdef _MSC_VER
+	#define WIN32_LEAN_AND_MEAN
+	#include <direct.h>
+	#include <windows.h>
+	#define getcwd _getcwd
+	#define PATH_MAX MAX_PATH
+#else
+	#include <climits>
+	#include <unistd.h>
+#endif
+#ifdef _WIN32
+	#define PATH_SEP '\\\\'
+#else
+	#define PATH_SEP '/'
+#endif
+
+//Macros for cwd
+#define GETCWD_VAR(name) char name[PATH_MAX]; getcwd(name, sizeof(name));
+
+#endif //NRES_NEED_GETCWD
+
 
 //Structs
 /** Represents an embedded resource. */

@@ -101,6 +101,41 @@ Cleaned up 5 resource files.
 
 As seen in the examples, NanoRes will name output headers with the filename, sans any non-ASCII and illegal characters, eg: `test.txt` becomes `test.txt.nres`. For the actual struct names in these files, the filename becomes the source filename, sans illegal C identifier characters, and the first 6 digits of the file's MD5 hash, eg: `test.txt` becomes `test_txt_d9f7c9`. Keep in mind that any filename starting with a number will automatically have an underscore prepended to the struct name, eg: `3testing.txt` becomes `_3testing_txt_35571d`. This ensures that filenames do not clash with the identifier rules for C. If this information is somehow missed, then this same information will be written to a file called `nres_manifest.txt` in the starting directory that the tool ran in. If the tool ran for a single file, then this manifest file will be placed alongside the processed resource in the same directory.
 
+### Usage In Code
+
+All NanoRes-generated headers ship with the following struct object:
+```c
+typedef struct {
+	/** The MD5 hash of the file. This value is always 33 bytes long. */
+	const char md5[33];
+
+	/** The name of the file, including its extension. */
+	const char* filename;
+
+	/** The size of the file in bytes. */
+	const size_t size;
+
+	/** The actual data of the file. */
+	const uint8_t* data;
+} NRes;
+```
+
+When a resource is converted, an instance of this struct is generated too, allowing various attributes of the file to be accessed in a programmatic way. For example, the size can be obtained via calling `obj.size`. For a file called `hello.txt` of size 42 bytes, the following struct will be generated:
+```c
+const NRes hello_txt_d9f7c9 = {
+	"d9f7c9688960411531aadc4dc1ea4e8f",
+	"hello.txt",
+	42,
+	hello_txt_d9f7c9688960411531aadc4dc1ea4e8f_bytes //Pointer to the raw array of bytes, which immediately precedes this declaration
+};
+```
+
+Refer to [this C++ source](integration_examples/src/main.cpp) for a complete example of how to use this struct.
+
+### Extras: Current Directory Information
+
+NanoRes also ships with a utility macro to get the current directory as an absolute path. Simply add `#define NRES_NEED_GETCWD` before including any NanoRes generated header and use the macro `GETCWD_VAR(foo)`. This will create a `char*` variable named `foo` with the result of `getcwd()`. In C++17, one may use `std::filesystem::current_path()` instead. For more information on `getcwd()`, see [the documentation](https://linux.die.net/man/3/getcwd). Do keep in mind that this function is also supported in Windows, which is automatically taken care of if using this feature of NanoRes.
+
 ## Project Integration
 
 ### Overview
@@ -109,7 +144,7 @@ This script is simple to include into an existing C/C++ build system. Simply inc
 
 - `nr_gen.py`: The main script used to generate resources.
 - `scaffold.txt`: The base file that is processed to create a resource header. This contains placeholders that are substituted when running this script.
-- `nano_res.h`: The common dependencies for the generated headers. THis file contains utility functions for working with generated resources as well as the resource struct itself. These items will appear in every resource file generated, but only faces source inclusion once due to the header guard present in this file.
+- `nano_res.h`: The common dependencies for the generated headers. This file contains utility functions for working with generated resources as well as the resource struct itself. These items will appear in every resource file generated, but only faces source inclusion once due to the header guard present in this file.
 
 The subdirectory in your build system should look like the following for inclusion to be successful:
 ```
