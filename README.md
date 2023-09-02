@@ -249,7 +249,7 @@ Contributions are welcome and encouraged as long as they are done so in a civili
 
 ### Basic Style Guide
 
-This project enforces code style via [Pylint](https://pylint.readthedocs.io/en/latest/). It can be installed via Pip (`pip install pylint`) or via [your favorite package manager](https://pkgs.org/search/?q=pylint). All contributions should follow this style guide to ensure style consistency. To run Pylint checks, simply call `pylint *.py`. In regards to the scaffold and C header, there is no specific style guide, but care should be taken to ensure that formatting and style resembles what already exists.
+This project enforces code style via [Pylint](https://pylint.readthedocs.io/en/latest/). It can be installed via Pip (`pip install pylint`) or via [your favorite package manager](https://pkgs.org/search/?q=pylint). All contributions should follow this style guide to ensure style consistency. To run Pylint checks, simply call `pylint $(git ls-files '*.py') `. In regards to the scaffold and C header, there is no specific style guide, but care should be taken to ensure that formatting and style resembles what already exists.
 
 ### Contributor Code of Conduct
 
